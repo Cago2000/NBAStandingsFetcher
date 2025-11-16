@@ -11,7 +11,11 @@ from team_names import TEAM_NAME_TO_FULL
 BASE_DIR = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
 
 CONFIG_FILE = os.path.join(BASE_DIR, "config.json")
-OUTPUT_FILE = os.path.join(BASE_DIR, "standings.json")
+
+APPDATA = os.getenv("APPDATA")
+DATA_DIR = os.path.join(APPDATA, "NBAStandingsFetcher")
+os.makedirs(DATA_DIR, exist_ok=True)
+OUTPUT_FILE = os.path.join(DATA_DIR, "standings.json")
 
 # === Load configuration ===
 with open(CONFIG_FILE) as f:
