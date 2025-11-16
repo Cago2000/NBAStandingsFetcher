@@ -22,7 +22,7 @@ with open(CONFIG_FILE) as f:
     config = json.load(f)
 
 PC_IP = config.get("pc_ip", "")
-SERVER_PORT = config.get("server_port", 8000)
+PC_PORT = config.get("pc_port", 8000)
 UPDATE_INTERVAL = config.get("update_interval", 600)
 
 def fetch_standings():
@@ -66,11 +66,11 @@ def save_json(data):
 
 def start_http_server():
     """Start HTTP server in the exe folder."""
-    print(f"Starting HTTP server on port {SERVER_PORT}...")
+    print(f"Starting HTTP server on port {PC_PORT}...")
     os.chdir(BASE_DIR)  # serve files from the exe folder
-    server_address = ("", SERVER_PORT)
-    httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
-    print(f"HTTP server ready. ESP32 can fetch http://{PC_IP}:{SERVER_PORT}/{os.path.basename(OUTPUT_FILE)}")
+    pc_address = ("", PC_PORT)
+    httpd = HTTPServer(pc_address, SimpleHTTPRequestHandler)
+    print(f"HTTP server ready. ESP32 can fetch http://{PC_IP}:{PC_PORT}/{os.path.basename(OUTPUT_FILE)}")
     httpd.serve_forever()
 
 def auto_update_standings():
