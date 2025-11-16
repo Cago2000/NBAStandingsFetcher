@@ -57,6 +57,7 @@ def fetch_standings():
 
 def save_json(data):
     """Save simplified standings as JSON."""
+    os.makedirs(DATA_DIR, exist_ok=True)
     try:
         with open(OUTPUT_FILE, "w") as f:
             json.dump(data, f, indent=2)
