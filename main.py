@@ -43,21 +43,16 @@ UPDATE_INTERVAL = config.get("update_interval", 600)
 
 def fetch_standings():
     """Fetch NBA standings with full team names."""
-    print("Fetching NBA standings...")
     try:
         standings_resp = LeagueStandings()
         standings_data = standings_resp.get_data_frames()[0]
-
         result = {"East": [], "West": []}
         for _, row in standings_data.iterrows():
             conf = row['Conference']
             if conf in result:
-                name = row['TeamName']
-                full_name = TEAM_NAME_TO_FULL.get(name, row['TeamName'])
-                games_behind = float(row['ConferenceGamesBack'])
                 result[conf].append({
-                    "team": full_name,
-                    "games_behind": games_behind,
+                    "team": TEAM_NAME_TO_FULL.get(row['TeamName']),
+                    "games_behind": float(row['ConferenceGamesBack']),
                     "wins": int(row['WINS']),
                     "losses": int(row['LOSSES'])
                 })
@@ -77,7 +72,6 @@ def save_json(data):
     try:
         with open(OUTPUT_FILE, "w") as f:
             json.dump(data, f, indent=2)
-        print(f"Standings saved to {OUTPUT_FILE}")
     except Exception as e:
         print("Failed to save standings:", e)
 
