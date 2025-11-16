@@ -1,4 +1,5 @@
 import os
+import socket
 import sys
 import json
 import threading
@@ -37,7 +38,7 @@ sys.stderr = Logger(LOG_FILE)
 with open(CONFIG_FILE) as f:
     config = json.load(f)
 
-PC_IP = config.get("pc_ip", "")
+PC_IP = socket.gethostbyname(socket.gethostname())
 PC_PORT = config.get("pc_port", 8000)
 UPDATE_INTERVAL = config.get("update_interval", 600)
 
