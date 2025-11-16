@@ -17,6 +17,22 @@ DATA_DIR = os.path.join(APPDATA, "NBAStandingsFetcher")
 os.makedirs(DATA_DIR, exist_ok=True)
 OUTPUT_FILE = os.path.join(DATA_DIR, "standings.json")
 
+LOG_FILE = os.path.join(DATA_DIR, "fetcher.log")
+os.makedirs(DATA_DIR, exist_ok=True)
+
+class Logger:
+    def __init__(self, path):
+        self.path = path
+    def write(self, msg):
+        with open(self.path, "a", encoding="utf-8") as f:
+            f.write(msg)
+    def flush(self):
+        pass
+
+sys.stdout = Logger(LOG_FILE)
+sys.stderr = Logger(LOG_FILE)
+
+
 # === Load configuration ===
 with open(CONFIG_FILE) as f:
     config = json.load(f)
