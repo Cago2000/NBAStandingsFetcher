@@ -68,7 +68,7 @@ def save_json(data):
 def start_http_server():
     """Start HTTP server in the exe folder."""
     print(f"Starting HTTP server on port {PC_PORT}...")
-    os.chdir(BASE_DIR)  # serve files from the exe folder
+    os.chdir(DATA_DIR)  # serve files from the exe folder
     pc_address = ("", PC_PORT)
     httpd = HTTPServer(pc_address, SimpleHTTPRequestHandler)
     print(f"HTTP server ready. ESP32 can fetch http://{PC_IP}:{PC_PORT}/{os.path.basename(OUTPUT_FILE)}")
